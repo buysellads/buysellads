@@ -1,6 +1,6 @@
 <?php
 /**
- * Functions
+ * BSA Functions
  *
  * @package WordPress
  * @subpackage WP Buy Sell Ads

@@ -22,7 +22,7 @@ You'll want `define('WPLANG', 'es_ES')`
 Of course, you'll replace `es_ES` with the language extension that you want to use, unless of course you actually did want the Spanish language translation. Below is a list of currently available translations.
 
  * Spanish translation: es_ES
-
+ 
 
 == Installation ==
 

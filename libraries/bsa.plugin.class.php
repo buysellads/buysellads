@@ -1,6 +1,6 @@
 <?php
 /**
- * Buy Sell Ads class.
+ * Buy Sell Ads Class
  *
  * @package WordPress
  * @subpackage WP Buy Sell Ads
