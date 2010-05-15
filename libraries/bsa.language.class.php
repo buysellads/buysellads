@@ -1,6 +1,6 @@
 <?php
 /**
- * Language class.
+ * Language Class
  *
  * @package WordPress
  * @subpackage WP Buy Sell Ads
