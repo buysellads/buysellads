@@ -7,7 +7,6 @@ Version: 1.0
 Author: Derek Herman
 Author URI: http://valendesigns.com/
 License: GPL2
-Text Domain: buy-sell-ads
 */
 
 /*
@@ -28,20 +27,38 @@ Text Domain: buy-sell-ads
 */
 
 /**
+ * Define the plugin path
+ *
+ * @since 1.0
+ */
+define( 'THIS_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname( plugin_basename( __FILE__ ) ) );
+
+/**
  * BSA required files
  *
  * @since 1.0
  */
-require_once('bsa.plugin.class.php');
-require_once('bsa.widget.class.php');
-require_once('bsa.functions.php');
+require_once('libraries/bsa.language.class.php');
+require_once('libraries/bsa.plugin.class.php');
+require_once('libraries/bsa.widget.class.php');
+require_once('helpers/bsa.functions.php');
 
 /**
- * Instantiate new Buy_Sell_Ads class
+ * Instantiate classes
  *
  * @since 1.0
  */
-$buy_sell_ads = new Buy_Sell_Ads();
+$bsa_plugin = new Buy_Sell_Ads();
+$bsa_lang  = new BSA_Language();
+
+/**
+ * Load Translations
+ *
+ * @uses BSA_Language class
+ *
+ * @since 1.0
+ */
+$bsa_lang->load('widget');
 
 /**
  * Add required actions
@@ -50,14 +67,6 @@ $buy_sell_ads = new Buy_Sell_Ads();
  *
  * @since 1.0
  */
-add_action('wp_body_open', array($buy_sell_ads, 'embed_bsa_async_js'));
-add_action('widgets_init', array($buy_sell_ads, 'widget_init'));
-
-/**
- * Load i18n
- *
- * @uses load_plugin_textdomain()
- *
- * @since 1.0
- */
-load_plugin_textdomain('buy-sell-ads', false, dirname( plugin_basename( __FILE__ ) ) . '/lang');
+//add_action('wp_body_open', array($bsa_plugin, 'embed_bsa_async_js'));
+add_action('widgets_init', array($bsa_plugin, 'widget_init'));
+add_action('wp_footer', array($bsa_plugin, 'embed_bsa_async_js'));

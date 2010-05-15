@@ -11,7 +11,7 @@
  * Function to echo BSA zone code
  *
  * @since 1.0
- * @uses $buy_sell_ads global variable
+ * @uses $bsa_plugin global variable
  *
  * @param int $ad_zone
  * @param string $site_key
@@ -22,8 +22,8 @@ if (!function_exists('bsa_zone'))
 {
   function bsa_zone($ad_zone = '', $site_key = '') 
   {
-    global $buy_sell_ads;
-    echo $buy_sell_ads->get_bsa_zone($ad_zone, $site_key);
+    global $bsa_plugin;
+    echo $bsa_plugin->get_bsa_zone($ad_zone, $site_key);
   }
 }
 

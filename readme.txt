@@ -1,6 +1,6 @@
 === WP Buy Sell Ads ===
 Contributors: valendesigns
-Tags: bsa, buy sell ads, ads, ad, ad management, widget, i18n
+Tags: bsa, buy sell ads, ads, ad, ad management, widget
 Requires at least: 2.8
 Tested up to: 3.0
 Stable tag: 1.0

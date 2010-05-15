@@ -40,12 +40,12 @@ class Buy_Sell_Ads
    * Initiate the widget class
    *
    * @since 1.0
-   * @uses register_widget() Calls 'Buy_Sell_Ads_Widget' class.
+   * @uses register_widget() Calls 'BSA_Widget' class.
    *
    */
   function widget_init() 
   {
-    register_widget('Buy_Sell_Ads_Widget');
+    register_widget('BSA_Widget');
   }
   
   /**
