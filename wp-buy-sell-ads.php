@@ -48,7 +48,7 @@ require_once('helpers/bsa.functions.php');
  *
  * @since 1.0
  */
-$bsa_plugin = new Buy_Sell_Ads();
+$bsa_plugin = new BSA_Plugin();
 $bsa_lang  = new BSA_Language();
 
 /**

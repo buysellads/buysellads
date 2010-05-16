@@ -1,12 +1,12 @@
 <?php
 /**
- * Buy Sell Ads Class
+ * Plugin Class
  *
  * @package WordPress
  * @subpackage WP Buy Sell Ads
  * @since 1.0
  */
-class Buy_Sell_Ads 
+class BSA_Plugin 
 {
   
   /**

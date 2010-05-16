@@ -1,6 +1,6 @@
 <?php
 /**
- * Extends the WP_Widget Class
+ * Widget Class Extends WP_Widget
  *
  * @package WordPress
  * @subpackage WP Buy Sell Ads
