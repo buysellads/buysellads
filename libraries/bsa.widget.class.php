@@ -53,7 +53,7 @@ class BSA_Widget extends WP_Widget
       <!-- END BuySellAds.com Zone Code -->
     ");
     echo $after_widget;
-	}
+  }
   
   /**
    * This function should check that $new_instance is set correctly.
