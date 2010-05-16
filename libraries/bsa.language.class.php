@@ -41,11 +41,18 @@ class BSA_Language
     {
       include(THIS_PLUGIN_DIR.'/language/'.$idiom.'/'.$langfile);
     }
+    // failed to load
     else
     {
-      if (file_exists(THIS_PLUGIN_DIR.'/language/'.$idiom.'/'.$langfile))
+      // load English
+      if (file_exists(THIS_PLUGIN_DIR.'/language/en_US/'.$langfile))
       {
-        include(THIS_PLUGIN_DIR.'/language/'.$idiom.'/'.$langfile);
+        include(THIS_PLUGIN_DIR.'/language/en_US/'.$langfile);
+      }
+      // total failure
+      else 
+      {
+        return FALSE;
       }
     }
     
