@@ -39,7 +39,7 @@ If you don't want to use a widget, you can also add the following code to any on
 
 In order for this plugin to work properly and to utilize the Asynchronous ad code, you'll need to insert a snippet into the header.php of your theme. Directly after the opening `<body>` tag insert `<?php wp_body_open(); ?>`. 
 
-In the future, support for Asynchronous code insertion will be possible using `wp_head`. However, until IE gets on board we're just going to have to make due.
+In the future, support for Asynchronous code insertion will be possible using `wp_head`. However, until IE 6 & 7 are no longer being used, we're just going to have to make due with adding a simple hook to the header.php.
 
 
 == Frequently Asked Questions ==
