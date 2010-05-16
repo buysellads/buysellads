@@ -14,7 +14,8 @@ class BSA_Language
   /**
    * Load the language file
    *
-   * @access  public
+   * @since 1.0
+   *
    * @param   mixed   $langfile the name of the language file to be loaded. Can be an array
    * @param   string  $idiom the language (en_US, etc.)
    * @param   bool    $return default FALSE
@@ -63,7 +64,8 @@ class BSA_Language
   /**
    * Fetch a single line of text from the language array
    *
-   * @access  public
+   * @since 1.0
+   *
    * @param   string $line the language line
    * @return  string
    */

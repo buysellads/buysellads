@@ -1,6 +1,6 @@
 <?php
 /**
- * English Language Array
+ * English Language
  *
  * @package WordPress
  * @subpackage WP Buy Sell Ads

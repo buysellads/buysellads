@@ -12,6 +12,9 @@ class BSA_Widget extends WP_Widget
   /**
    * PHP5 constructor
    *
+   * @since 1.0
+   * @uses $bsa_lang global variable
+   *
    * @param string $id_base Optional Base ID for the widget, lower case,
    * if left empty a portion of the widget's class name will be used. Has to be unique.
    * @param string $name Name for the widget displayed on the configuration page.
@@ -33,9 +36,11 @@ class BSA_Widget extends WP_Widget
   /**
    * This function generates the widget code
    *
+   * @since 1.0
+   * @uses apply_filters()
+   *
    * @param array $args Display arguments including before_title, after_title, before_widget, and after_widget.
    * @param array $instance The settings for the particular instance of the widget
-   *
    */
   function widget($args, $instance) 
   {
@@ -76,6 +81,9 @@ class BSA_Widget extends WP_Widget
   
   /**
    * Echo the settings update form
+   *
+   * @since 1.0
+   * @uses $bsa_lang global variable
    *
    * @param array $instance Current settings
    */

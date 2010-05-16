@@ -8,7 +8,7 @@
  */
  
 /**
- * Function to echo BSA zone code
+ * Function to display BSA zone
  *
  * @since 1.0
  * @uses $bsa_plugin global variable
