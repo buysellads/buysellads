@@ -31,7 +31,7 @@ License: GPL2
  *
  * @since 1.0
  */
-define( 'THIS_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname( plugin_basename( __FILE__ ) ) );
+define( 'BSA_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname( plugin_basename( __FILE__ ) ) );
 
 /**
  * BSA required files

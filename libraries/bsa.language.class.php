@@ -37,17 +37,17 @@ class BSA_Language
     }
     
     // Determine where the language file is and load it
-    if (file_exists(THIS_PLUGIN_DIR.'/language/'.$idiom.'/'.$langfile))
+    if (file_exists(BSA_PLUGIN_DIR.'/language/'.$idiom.'/'.$langfile))
     {
-      include(THIS_PLUGIN_DIR.'/language/'.$idiom.'/'.$langfile);
+      include(BSA_PLUGIN_DIR.'/language/'.$idiom.'/'.$langfile);
     }
     // failed to load
     else
     {
       // load English
-      if (file_exists(THIS_PLUGIN_DIR.'/language/en_US/'.$langfile))
+      if (file_exists(BSA_PLUGIN_DIR.'/language/en_US/'.$langfile))
       {
-        include(THIS_PLUGIN_DIR.'/language/en_US/'.$langfile);
+        include(BSA_PLUGIN_DIR.'/language/en_US/'.$langfile);
       }
       // total failure
       else 
