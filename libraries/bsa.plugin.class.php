@@ -31,8 +31,7 @@ class Buy_Sell_Ads
         })();
         </script>
         <!-- END BuySellAds.com Ad Code --> 
-        "
-      );
+      ");
     }
   }
   
@@ -61,10 +60,10 @@ class Buy_Sell_Ads
   function get_bsa_zone($ad_zone = '', $site_key = '') 
   {
     return ("
-  	  <!-- BuySellAds.com Zone Code -->
+      <!-- BuySellAds.com Zone Code -->
       <div id=\"bsap_{$ad_zone}\" class=\"bsarocks bsap_{$site_key}\"></div>
       <!-- END BuySellAds.com Zone Code -->
-  	");
+    ");
   }
   
 }
