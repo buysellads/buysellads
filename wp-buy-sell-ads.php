@@ -67,6 +67,5 @@ $bsa_lang->load('widget');
  *
  * @since 1.0
  */
-//add_action('wp_body_open', array($bsa_plugin, 'embed_bsa_async_js'));
+add_action('wp_body_open', array($bsa_plugin, 'embed_bsa_async_js'));
 add_action('widgets_init', array($bsa_plugin, 'widget_init'));
-add_action('wp_footer', array($bsa_plugin, 'embed_bsa_async_js'));

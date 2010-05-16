@@ -16,7 +16,7 @@ class BSA_Language
 	 *
 	 * @access	public
 	 * @param	mixed	the name of the language file to be loaded. Can be an array
-	 * @param	string	the language (english, etc.)
+	 * @param	string	the language (en_US, etc.)
 	 * @return	mixed
 	 */
 	function load($langfile = '', $idiom = '', $return = FALSE)
