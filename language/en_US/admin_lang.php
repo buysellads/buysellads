@@ -15,6 +15,7 @@ $lang['widget_ad_zone'] = 'Ad Zone';
 
 
 $lang['settings_updated'] = 'Settings Updated';
+$lang['settings_error'] = 'Your <strong>Site Key</strong> could not be verified.';
 
 $lang['site_key'] = 'Site Key';
 $lang['site_key_desc'] = 'Paste your BuySellAds.com Site Key here.';
