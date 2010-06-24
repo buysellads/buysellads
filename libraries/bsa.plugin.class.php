@@ -86,14 +86,14 @@ class BSA_Plugin
       $json_data = get_buysellads_json();
       if ($json_data)
       {
-        // Update Message
-        echo '<div class="updated"><p><strong>'.$bsa_lang->line('settings_updated').'</strong></p></div>';
+        // Success Message
+        echo '<div class="message updated"><p><strong>'.$bsa_lang->line('settings_updated').'</strong></p></div>';
       }
       else
       {
-        // Update Error
+        // Error Message
         echo '<div class="message error"><p><strong>'.$bsa_lang->line('settings_error').'</strong></p></div>';
-        update_option( 'bsa_site_key', '' );
+        delete_option( 'bsa_site_key' );
       }
     }
     ?>

@@ -14,7 +14,7 @@ $lang['widget_title'] = 'Title';
 $lang['widget_ad_zone'] = 'Ad Zone';
 
 
-$lang['settings_updated'] = 'Settings Updated';
+$lang['settings_updated'] = 'Site Key verified. Settings Updated.';
 $lang['settings_error'] = 'Your <strong>Site Key</strong> could not be verified.';
 
 $lang['site_key'] = 'Site Key';
