@@ -5,7 +5,7 @@ Requires at least: 2.8
 Tested up to: 3.0
 Stable tag: 1.0
 
-Official Buy Sell Ads WordPress plugin.
+Official BuySellAds.com WordPress plugin.
 
 == Description ==
 

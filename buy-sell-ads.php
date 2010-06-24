@@ -2,7 +2,7 @@
 /*
 Plugin Name: Buy Sell Ads
 Plugin URI: http://buysellads.com/
-Description: Official Buy Sell Ads WordPress plugin.
+Description: Official BuySellAds.com WordPress plugin.
 Version: 1.0
 Author: Derek Herman
 Author URI: http://valendesigns.com/
