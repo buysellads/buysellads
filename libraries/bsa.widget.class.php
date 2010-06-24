@@ -99,7 +99,7 @@ class BSA_Widget extends WP_Widget
     
     if (!$site_key = get_option('bsa_site_key')) 
     {
-      echo '<p>'. sprintf( $bsa_lang->line('empty_site_key'), admin_url('admin.php?page=wp_buy_sell_ads') ) .'</p>';
+      echo '<p>'. sprintf( $bsa_lang->line('empty_site_key'), admin_url('admin.php?page=bsa_settings') ) .'</p>';
 			return;
     } 
     else 
