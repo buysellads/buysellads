@@ -32,12 +32,18 @@ class BSA_Plugin
    */
   function bsa_admin() 
   {
+    global $bsa_lang;
+    
+    // Grab language text
+    $plugin_title = $bsa_lang->line('plugin_title');
+    $setting_title = $bsa_lang->line('setting_title');
+    
     // Set Menu Icon
     $icon = BSA_PLUGIN_URL.'/assets/images/icon.png';
     
     // Create Menu Items
-    add_object_page('Buy Sell Ads', 'Buy Sell Ads', 'upload_files', 'wp_buy_sell_ads', array( $this, 'bsa_admin_settings' ), $icon );
-    $bsa_admin_page = add_submenu_page('wp_buy_sell_ads', 'Buy Sell Ads', 'Settings', 'upload_files', 'wp_buy_sell_ads', array( $this, 'bsa_admin_settings' ) );
+    add_object_page( $plugin_title, $plugin_title, 'upload_files', 'bsa_settings', array( $this, 'bsa_admin_settings' ), $icon );
+    $bsa_admin_page = add_submenu_page( 'bsa_settings', $plugin_title, $setting_title, 'upload_files', 'bsa_settings', array( $this, 'bsa_admin_settings' ) );
     
     // Add Menu Items
     add_action("admin_print_styles-$bsa_admin_page", array( $this, 'bsa_admin_load' ) );

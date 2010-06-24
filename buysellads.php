@@ -27,7 +27,7 @@ License: GPL2
 */
 
 /**
- * Define the plugin path
+ * Define the plugin directory path & URL
  *
  * @since 1.0
  */

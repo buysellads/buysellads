@@ -60,9 +60,9 @@ if (!function_exists('wp_body_open'))
  *
  * @return string
  */
-if (!function_exists('get_bsa_zone')) 
+if (!function_exists('get_buysellads')) 
 {
-  function get_bsa_zone($ad_zone = '', $site_key = '') 
+  function get_buysellads($ad_zone = '', $site_key = '') 
   {
     return ("
       <!-- BuySellAds.com Zone Code -->
@@ -76,33 +76,45 @@ if (!function_exists('get_bsa_zone'))
  * Function to display BSA zone
  *
  * @since 1.0
- * @uses get_bsa_zone()
+ * @uses get_buysellads()
  *
  * @param int $ad_zone
  * @param string $site_key
  *
  * @return string
  */
-if (!function_exists('bsa_zone')) 
+if (!function_exists('buysellads')) 
 {
-  function bsa_zone($ad_zone = '', $site_key = '') 
+  function buysellads($ad_zone = '', $site_key = '') 
   {
-    echo get_bsa_zone($ad_zone, $site_key);
+    echo get_buysellads($ad_zone, $site_key);
   }
 }
 
-if (!function_exists('get_bsa_json'))
+/**
+ * Function to grab BSA zones
+ *
+ * @since 1.0
+ * @uses file_get_contents()
+ * @uses json_decode()
+ *
+ * @return JSON array
+ */
+if (!function_exists('get_buysellads_json'))
 {
-  function get_bsa_json()
+  function get_buysellads_json()
   {
-    $json_url = "http://s3.buysellads.com/r/s_".get_option('bsa_site_key').".js";
-    $json_contents = @file_get_contents($json_url);
-    
-    // If @file_get_contents($json_url) returns true
-    if ($json_contents) 
+    if ($bsa_site_key = get_option('bsa_site_key'))
     {
-      // Decode & return json data
-      return json_decode(substr( $json_contents, 21, -2), true);
+      $json_url = "http://s3.buysellads.com/r/s_".$bsa_site_key.".js";
+      $json_contents = @file_get_contents($json_url);
+      
+      // If @file_get_contents($json_url) returns true
+      if ($json_contents) 
+      {
+        // Decode & return json data
+        return json_decode(substr( $json_contents, 21, -2), true);
+      }
     }
   }
 }

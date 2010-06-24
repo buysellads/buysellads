@@ -7,6 +7,7 @@
  * @since 1.0
  */
 $lang['plugin_title'] = 'Buy Sell Ads';
+$lang['setting_title'] = 'Settings';
 
 $lang['widget_description'] = 'Display your ad zones from BuySellAds.com';
 $lang['widget_title'] = 'Title';

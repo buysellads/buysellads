@@ -32,7 +32,7 @@ Activate the plugin and display your Ad Zones via the widgets menu.
 
 If you don't want to use a widget, you can also add the following code to any one of your theme files with a .php extension:
 
-`<?php if (function_exists('bsa_zone')) { bsa_zone($ad_zone, $site_key); } ?>`
+`<?php if (function_exists('buysellads')) { buysellads($ad_zone, $site_key); } ?>`
 
 * `$ad_zone` is the zone ID
 * `$site_key` is the site key for that zone
