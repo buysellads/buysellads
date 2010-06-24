@@ -3,7 +3,7 @@
  * Widget Class Extends WP_Widget
  *
  * @package WordPress
- * @subpackage WP Buy Sell Ads
+ * @subpackage Buy Sell Ads
  * @since 1.0
  */
 class BSA_Widget extends WP_Widget 
@@ -29,8 +29,8 @@ class BSA_Widget extends WP_Widget
   {
     global $bsa_lang;
     
-    $widget_ops = array('classname' => 'widget_bsa', 'description' => $bsa_lang->line('description') );
-    $this->WP_Widget('bsa', $bsa_lang->line('widget_title'), $widget_ops);
+    $widget_ops = array('classname' => 'widget_bsa', 'description' => $bsa_lang->line('widget_description') );
+    $this->WP_Widget('bsa', $bsa_lang->line('plugin_title'), $widget_ops);
   }
   
   /**
@@ -44,20 +44,27 @@ class BSA_Widget extends WP_Widget
    */
   function widget($args, $instance) 
   {
-    extract($args, EXTR_SKIP);
- 
-    echo $before_widget;
-    $title    = empty($instance['title']) ? '' : apply_filters('widget_title', $instance['title']);
-    $ad_zone  = empty($instance['ad_zone']) ? '' : apply_filters('widget_ad_zone', $instance['ad_zone']);
-    $site_key = empty($instance['site_key']) ? '' : apply_filters('widget_site_key', $instance['site_key']);
     
-    if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
-    echo ("
-      <!-- BuySellAds.com Zone Code -->
-      <div id=\"bsap_{$ad_zone}\" class=\"bsarocks bsap_{$site_key}\"></div>
-      <!-- END BuySellAds.com Zone Code -->
-    ");
-    echo $after_widget;
+    if ( !$site_key = get_option( 'bsa_site_key' ) )
+    {
+      return;
+    }
+    else
+    { 
+      extract($args, EXTR_SKIP);
+   
+      echo $before_widget;
+      $title    = empty($instance['title']) ? '' : apply_filters('plugin_title', $instance['title']);
+      $ad_zone  = empty($instance['ad_zone']) ? '' : apply_filters('widget_ad_zone', $instance['ad_zone']);
+      
+      if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
+      echo ("
+        <!-- BuySellAds.com Zone Code -->
+        <div id=\"bsap_{$ad_zone}\" class=\"bsarocks bsap_{$site_key}\"></div>
+        <!-- END BuySellAds.com Zone Code -->
+      ");
+      echo $after_widget;
+    }
   }
   
   /**
@@ -73,8 +80,7 @@ class BSA_Widget extends WP_Widget
   {
     $instance = $old_instance;
     $instance['title']    = strip_tags($new_instance['title']);
-    $instance['ad_zone']  = (int) $new_instance['ad_zone'];
-    $instance['site_key'] = strip_tags($new_instance['site_key']);
+    $instance['ad_zone']  = strip_tags($new_instance['ad_zone']);
     
     return $instance;
   }
@@ -91,27 +97,38 @@ class BSA_Widget extends WP_Widget
   {
     global $bsa_lang;
     
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'ad_zone' => '', 'site_key' => '' ) );
-    $title    = strip_tags($instance['title']);
-    $ad_zone  = strip_tags($instance['ad_zone']);
-    $site_key = strip_tags($instance['site_key']);
-    ?>	
-    <p>
-      <label for="<?php echo $this->get_field_id('title'); ?>"><?php echo $bsa_lang->line('title'); ?>: 
-        <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
-      </label>
-    </p>
-    <p>
-      <label for="<?php echo $this->get_field_id('ad_zone'); ?>"><?php echo $bsa_lang->line('ad_zone'); ?>: 
-        <input class="widefat" id="<?php echo $this->get_field_id('ad_zone'); ?>" name="<?php echo $this->get_field_name('ad_zone'); ?>" type="text" value="<?php echo attribute_escape($ad_zone); ?>" />
-      </label>
-    </p>
-    <p>
-      <label for="<?php echo $this->get_field_id('site_key'); ?>"><?php echo $bsa_lang->line('site_key'); ?>: 
-        <input class="widefat" id="<?php echo $this->get_field_id('site_key'); ?>" name="<?php echo $this->get_field_name('site_key'); ?>" type="text" value="<?php echo attribute_escape($site_key); ?>" />
-      </label>
-    </p>
-    <?php
+    if (!$site_key = get_option('bsa_site_key')) 
+    {
+      echo '<p>'. sprintf( $bsa_lang->line('empty_site_key'), admin_url('admin.php?page=wp_buy_sell_ads') ) .'</p>';
+			return;
+    } 
+    else 
+    {
+      $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'ad_zone' => '' ) );
+      $title    = strip_tags($instance['title']);
+      $ad_zone  = strip_tags($instance['ad_zone']);
+      ?>	
+      <p>
+        <label for="<?php echo $this->get_field_id('title'); ?>"><?php echo $bsa_lang->line('widget_title'); ?>: 
+          <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
+        </label>
+      </p>
+      <p>
+        <label for="<?php echo $this->get_field_id('ad_zone'); ?>"><?php echo $bsa_lang->line('widget_ad_zone'); ?>: 
+          <select class="widefat" name="<?php echo $this->get_field_name('ad_zone'); ?>" id="<?php echo $this->get_field_id('ad_zone'); ?>" value="<?php echo attribute_escape($ad_zone); ?>">
+          <?php
+          $json_data = get_bsa_json();
+          foreach($json_data['zones'] as $zone) 
+          {
+            $selected = ($zone['id'] == attribute_escape($ad_zone)) ? ' selected="selected"': '';
+            echo '<option name="'.$zone['id'].'" value="'.$zone['id'].'"'.$selected.'>'.$zone['id'].' ('.$zone['width'].'x'.$zone['height'].')</option>';
+          }
+          ?>
+          </select>
+        </label>
+      </p>
+      <?php
+    }
   }
   
 }

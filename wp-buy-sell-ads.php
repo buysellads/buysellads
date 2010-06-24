@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WP Buy Sell Ads
+Plugin Name: Buy Sell Ads
 Plugin URI: http://buysellads.com/
 Description: Official Buy Sell Ads WordPress plugin.
 Version: 1.0
@@ -10,7 +10,7 @@ License: GPL2
 */
 
 /*
-  Copyright 2010  Derek Herman  (email : derek@valendesigns.com)
+  Copyright 2010  BuySellAds.com  (email : todd@buysellads.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License, version 2, as 
@@ -32,6 +32,7 @@ License: GPL2
  * @since 1.0
  */
 define( 'BSA_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.dirname( plugin_basename( __FILE__ ) ) );
+define( 'BSA_PLUGIN_URL', WP_PLUGIN_URL.'/'.dirname( plugin_basename( __FILE__ ) ) );
 
 /**
  * BSA required files
@@ -58,14 +59,16 @@ $bsa_lang  = new BSA_Language();
  *
  * @since 1.0
  */
-$bsa_lang->load('widget');
+$bsa_lang->load('admin');
 
 /**
  * Add required actions
  *
  * @uses add_action()
+ * @uses get_option()
  *
  * @since 1.0
  */
-add_action('wp_body_open', array($bsa_plugin, 'embed_bsa_async_js'));
-add_action('widgets_init', array($bsa_plugin, 'widget_init'));
+add_action( 'widgets_init', array( $bsa_plugin, 'widget_init' ) );
+add_action( 'admin_menu', array( $bsa_plugin, 'bsa_admin' ) );
+add_action( ( (get_option( 'bsa_body_open' ) == 1) ? 'wp_body_open' : 'wp_footer' ), 'embed_bsa_async_js' );

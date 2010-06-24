@@ -3,67 +3,123 @@
  * Plugin Class
  *
  * @package WordPress
- * @subpackage WP Buy Sell Ads
+ * @subpackage Buy Sell Ads
  * @since 1.0
  */
 class BSA_Plugin 
 {
-  
-  /**
-   * Embeds BSA AsyncJavaScript to the beginning of the body
-   *
-   * @since 1.0
-   *
-   * @return string
-   */
-  function embed_bsa_async_js() 
-  {
-    if (!is_admin()) {
-      printf("
-        <!-- BuySellAds.com Ad Code -->
-        <script type=\"text/javascript\">
-        (function(){
-          var bsa = document.createElement('script');
-             bsa.type = 'text/javascript';
-             bsa.async = true;
-             bsa.src = '//s3.buysellads.com/ac/bsa.js';
-          (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
-        })();
-        </script>
-        <!-- END BuySellAds.com Ad Code --> 
-      ");
-    }
-  }
-  
-  /**
-   * Initiate the widget class
-   *
-   * @since 1.0
-   * @uses register_widget() Calls 'BSA_Widget' class.
-   *
-   */
+
+   /**
+    * Initiate the widget class
+    *
+    * @since 1.0
+    * @uses register_widget() Calls 'BSA_Widget' class.
+    *
+    */
   function widget_init() 
   {
     register_widget('BSA_Widget');
   }
   
   /**
-   * Returns BSA zone code
+   * Add Menu Item
+   *
+   * @since 1.0
+   * @uses add_object_page()
+   * @uses add_submenu_page()
+   *
+   * @return void
+   */
+  function bsa_admin() 
+  {
+    // Set Menu Icon
+    $icon = BSA_PLUGIN_URL.'/assets/images/icon.png';
+    
+    // Create Menu Items
+    add_object_page('Buy Sell Ads', 'Buy Sell Ads', 'upload_files', 'wp_buy_sell_ads', array( $this, 'bsa_admin_settings' ), $icon );
+    $bsa_admin_page = add_submenu_page('wp_buy_sell_ads', 'Buy Sell Ads', 'Settings', 'upload_files', 'wp_buy_sell_ads', array( $this, 'bsa_admin_settings' ) );
+    
+    // Add Menu Items
+    add_action("admin_print_styles-$bsa_admin_page", array( $this, 'bsa_admin_load' ) );
+  
+  }
+  
+  /**
+   * Load Scripts & Styles
    *
    * @since 1.0
    *
-   * @param int $ad_zone
-   * @param string $site_key
+   * @return void
+   */
+  function bsa_admin_load()
+  {
+  
+  }
+  
+  /**
+   * Load Scripts & Styles
+   *
+   * @since 1.0
    *
    * @return string
    */
-  function get_bsa_zone($ad_zone = '', $site_key = '') 
+  function bsa_admin_settings()
   {
-    return ("
-      <!-- BuySellAds.com Zone Code -->
-      <div id=\"bsap_{$ad_zone}\" class=\"bsarocks bsap_{$site_key}\"></div>
-      <!-- END BuySellAds.com Zone Code -->
-    ");
+    global $bsa_lang;
+    
+    if( isset($_POST[ 'option_values' ]) && $_POST[ 'option_values' ] == 'save' ) 
+    {
+      // Read posted value
+      $bsa_site_key = $_POST[ 'bsa_site_key' ];
+      $bsa_body_open = $_POST[ 'bsa_body_open' ];
+
+      // Save posted values
+      update_option( 'bsa_site_key', $bsa_site_key );
+      update_option( 'bsa_body_open', $bsa_body_open );
+      
+      // Update Message
+      echo '<div class="updated"><p><strong>'.$bsa_lang->line('settings_updated').'</strong></p></div>';
+    }
+    ?>
+    <div class="wrap">
+      <h2><?php echo $bsa_lang->line('plugin_title'); ?></h2>
+      
+      <form method="post" action="">
+        
+        <input type="hidden" name="option_values" value="save" />
+        
+        <table class="form-table">
+          <tbody>
+            <tr valign="top">
+              <th scope="row">
+                <label for="bsa_site_key"><?php echo $bsa_lang->line('site_key'); ?></label>
+              </th>
+              <td>
+                <input type="text" class="regular-text" value="<?php echo get_option('bsa_site_key'); ?>" id="bsa_site_key" name="bsa_site_key">
+                <span class="description"><?php echo $bsa_lang->line('site_key_desc'); ?></span>
+              </td>
+            </tr>
+            <tr valign="top">
+              <th scope="row"><?php echo $bsa_lang->line('bsa_body_open'); ?></th>
+              <td> 
+                <fieldset>
+                  <legend class="screen-reader-text"><span><?php echo $bsa_lang->line('bsa_body_open'); ?></span></legend>
+                  <label for="bsa_body_open">
+                    <input type="checkbox" value="1" id="bsa_body_open" name="bsa_body_open"<?php echo (get_option('bsa_body_open') == 1) ? ' checked="checked"': ''; ?>> Use <strong>wp_body_open()</strong>
+                  </label>
+                  <p><span class="description"><?php echo $bsa_lang->line('bsa_body_open_desc'); ?></span></p>
+                </fieldset>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <p class="submit">
+          <input type="submit" name="Submit" class="button-primary" value="Save Changes" />
+        </p>
+      </form>
+    </div>
+    <?php
   }
   
 }

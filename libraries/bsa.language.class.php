@@ -3,8 +3,9 @@
  * Language Class
  *
  * @package WordPress
- * @subpackage WP Buy Sell Ads
+ * @subpackage Buy Sell Ads
  * @since 1.0
+ * @author Derek Herman
  */
 class BSA_Language 
 {
@@ -12,16 +13,45 @@ class BSA_Language
   var $is_loaded	= array();
   
   /**
-   * Load the language file
+   * Load language files
    *
    * @since 1.0
    *
+   * @access	public
    * @param   mixed   $langfile the name of the language file to be loaded. Can be an array
    * @param   string  $idiom the language (en_US, etc.)
    * @param   bool    $return default FALSE
-   * @return  mixed
+   * @return  void
    */
   function load($langfile = '', $idiom = '', $return = FALSE)
+  {
+    // load $langfile array
+    if (is_array($langfile))
+		{
+			foreach ($langfile as $class)
+			{
+				$this->_load_language($class, $idiom, $return);
+			}
+		}
+		// load one $langfile
+		else
+		{
+		  $this->_load_language($langfile, $idiom, $return);
+		}
+  }
+  
+  /**
+   * Load each language file
+   *
+   * @since 1.0
+   *
+   * @access	private
+   * @param   string   $langfile the name of the language file to be loaded.
+   * @param   string  $idiom the language (en_US, etc.)
+   * @param   bool    $return default FALSE
+   * @return  array
+   */
+  function _load_language($langfile, $idiom, $return)
   {
     $langfile = str_replace('.php', '', str_replace('_lang.', '', $langfile)).'_lang.php';
     
@@ -73,6 +103,7 @@ class BSA_Language
    *
    * @since 1.0
    *
+   * @access	public
    * @param   string $line the language line
    * @return  string
    */
