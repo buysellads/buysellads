@@ -32,10 +32,9 @@ Activate the plugin and display your Ad Zones via the widgets menu.
 
 If you don't want to use a widget, you can also add the following code to any one of your theme files with a .php extension:
 
-`<?php if (function_exists('buysellads')) { buysellads($ad_zone, $site_key); } ?>`
+`<?php if (function_exists('buysellads')) { buysellads($ad_zone); } ?>`
 
 * `$ad_zone` is the zone ID
-* `$site_key` is the site key for that zone
 
 In order for this plugin to work properly and to utilize the Asynchronous ad code, you'll need to insert a snippet into the header.php of your theme. Directly after the opening `<body>` tag insert `<?php if (function_exists('wp_body_open')) { wp_body_open(); } ?>`. 
 

@@ -9,13 +9,14 @@
 class BSA_Plugin 
 {
 
-   /**
-    * Initiate the widget class
-    *
-    * @since 1.0
-    * @uses register_widget() Calls 'BSA_Widget' class.
-    *
-    */
+  /**
+   * Initiate the widget class
+   *
+   * @since 1.0
+   * @uses register_widget() Calls 'BSA_Widget' class.
+   *
+   * @return void
+   */
   function widget_init() 
   {
     register_widget('BSA_Widget');
@@ -54,12 +55,58 @@ class BSA_Plugin
    * Load Scripts & Styles
    *
    * @since 1.0
+   * @uses wp_enqueue_style()
+   * @uses wp_enqueue_script()
    *
    * @return void
    */
   function bsa_admin_load()
   {
+    // Enqueue Styles
+    wp_enqueue_style('bsa-css', BSA_PLUGIN_URL.'/assets/css/buysellads.css', false, false, 'screen');
+    
+    // Enqueue Scripts
+    wp_enqueue_script('bsa-js', BSA_PLUGIN_URL.'/assets/js/buysellads.js', array('jquery'), false);
+    
+  }
   
+  /**
+   * Update/Save Callback Data
+   *
+   * @since 1.0
+   * @uses stripslashes_deep()
+   * @uses get_option()
+   * @uses update_option()
+   *
+   * @return void
+   */
+  function bsa_update_callbacks()
+  {
+    // new options
+    $buysellads_callbacks_new = stripslashes_deep( $_POST['buysellads_callbacks'] );
+
+    // current options
+    $buysellads_callbacks_current = get_option( 'buysellads_callbacks' );
+    
+    // Update options
+    foreach($buysellads_callbacks_new as $key => $value) {
+      $buysellads_callbacks_current[$key] = $value;
+    }
+
+    update_option( 'buysellads_callbacks' , $buysellads_callbacks_current);
+  }
+  
+  /**
+   * Delete Callback Data
+   *
+   * @since 1.0
+   * @uses delete_option()
+   *
+   * @return void
+   */
+  function bsa_delete_callbacks()
+  {
+    delete_option( 'buysellads_callbacks' );
   }
   
   /**
@@ -75,6 +122,9 @@ class BSA_Plugin
     
     if( isset($_POST[ 'option_values' ]) && $_POST[ 'option_values' ] == 'save' ) 
     {
+      // Check Referer
+      check_admin_referer( 'buysellads_settings' );
+      
       // Read posted value
       $bsa_site_key = $_POST[ 'bsa_site_key' ];
       $bsa_body_open = $_POST[ 'bsa_body_open' ];
@@ -87,23 +137,45 @@ class BSA_Plugin
       if ($json_data)
       {
         // Success Message
-        echo '<div class="message updated"><p><strong>'.$bsa_lang->line('settings_updated').'</strong></p></div>';
+        printf( '<div class="updated fade"><p>%s</p></div>', $bsa_lang->line('settings_updated') );
       }
       else
       {
         // Error Message
-        echo '<div class="message error"><p><strong>'.$bsa_lang->line('settings_error').'</strong></p></div>';
+        printf( '<div class="error fade"><p>%s</p></div>', $bsa_lang->line('settings_error') );
         delete_option( 'bsa_site_key' );
       }
     }
-    ?>
-    <div class="wrap">
-      <h2><?php echo $bsa_lang->line('plugin_title'); ?></h2>
+    
+    // Save Callbacks
+    if ( isset($_POST[ 'submit_callbacks' ]) ) 
+    {
+      // Check Referer
+      check_admin_referer( 'buysellads_callbacks' );
       
+      // Update/Save Data
+      $this->bsa_update_callbacks();
+      
+      // Success Message
+      printf('<div class="updated fade"><p>%s</p></div>', $bsa_lang->line('callbacks_updated'));
+    }
+    
+    // Reset Callbacks
+    if ( isset($_POST[ 'reset_callbacks' ]) ) 
+    {
+      // Check Referer
+      check_admin_referer( 'buysellads_callbacks' );
+      
+      // Delete Saved Data
+      $this->bsa_delete_callbacks();
+      
+      // Success Message
+      printf('<div class="updated fade"><p>%s</p></div>', $bsa_lang->line('callbacks_error') );
+    }
+    ?>
+    <div class="wrap" id="buysellads">
+      <h2><?php echo $bsa_lang->line('plugin_title'); ?></h2>
       <form method="post" action="">
-        
-        <input type="hidden" name="option_values" value="save" />
-        
         <table class="form-table">
           <tbody>
             <tr valign="top">
@@ -129,13 +201,95 @@ class BSA_Plugin
             </tr>
           </tbody>
         </table>
-  
-        <p class="submit">
-          <input type="submit" name="Submit" class="button-primary" value="Save Changes" />
-        </p>
+        <?php 
+        if ( function_exists( 'wp_nonce_field' ) && wp_nonce_field( 'buysellads_settings' ) ) {
+          printf('
+          <p class="submit">
+            <input type="submit" name="submit_settings" class="button-primary" value="Save Settings" />
+          </p>
+          ',
+          $bsa_lang->line('submit_settings')
+          );
+        }
+        ?>
+        <input type="hidden" name="option_values" value="save" />
       </form>
-    </div>
-    <?php
+    <?php if ( get_option('bsa_site_key') != '' ) { // valid sitekey ?>    
+      <form method="post" action="">
+        <fieldset>
+          <h2><?php echo $bsa_lang->line('callbacks_title'); ?></h2>
+          <?php echo $bsa_lang->line('callbacks_desc'); ?>
+          <br />
+          <table class="widefat">
+            <thead>
+              <tr>
+                <th style="width:80px;"><?php echo $bsa_lang->line('callbacks_id'); ?></th>
+                <th style="width:100px;"><?php echo $bsa_lang->line('callbacks_size'); ?></th>
+                <th style="width:150px;"><?php echo $bsa_lang->line('callbacks_type'); ?></th>
+                <th><?php echo $bsa_lang->line('callbacks_code'); ?></th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th style="width:80px;"><?php echo $bsa_lang->line('callbacks_id'); ?></th>
+                <th style="width:100px;"><?php echo $bsa_lang->line('callbacks_size'); ?></th>
+                <th style="width:150px;"><?php echo $bsa_lang->line('callbacks_type'); ?></th>
+                <th><?php echo $bsa_lang->line('callbacks_code'); ?></th>
+              </tr>
+            <tfoot>
+            <tbody>
+            <?php
+            $buysellads_callbacks = get_option( 'buysellads_callbacks' );
+            $json_data = get_buysellads_json();
+            foreach($json_data['zones'] as $zone) {
+              printf('
+                <tr valign="top">
+                  <td>'.$zone['id'].'</td>
+                  <td>
+                    '.$zone['width'].'x'.$zone['height'].'
+                    <input type="hidden" name="buysellads_callbacks['.$zone['id'].'][width]" value="'.$zone['width'].'" />
+                    <input type="hidden" name="buysellads_callbacks['.$zone['id'].'][height]" value="'.$zone['height'].'" />
+                  </td>
+                  <td>
+                    <select name="buysellads_callbacks['.$zone['id'].'][type]" class="widefat">
+                      <option value="iframe" %s>%s</option>
+                      <option value="html" %s>%s</option>
+                    </select>
+                  </td>
+                  <td>
+                    <textarea name="buysellads_callbacks['.$zone['id'].'][code]" rows="7" cols="60" class="textarea">%s</textarea>
+                  </td>
+                </tr>
+                ',
+                ('iframe' == $buysellads_callbacks[$zone['id']]['type']) ? 'selected': '',
+                'iFrame',
+                ('html' == $buysellads_callbacks[$zone['id']]['type']) ? 'selected': '',
+                'HTML',
+                $buysellads_callbacks[$zone['id']]['code']
+              );
+            } 
+            ?> 
+            <tbody>
+          </table>
+          <?php 
+          if ( function_exists( 'wp_nonce_field' ) && wp_nonce_field( 'buysellads_callbacks' ) ) {
+            printf('
+            <p class="submit">
+              <input type="submit" name="submit_callbacks" class="button-primary" value="%s" /> 
+              <input type="submit" name="reset_callbacks" value="%s" onclick="return confirm_reset(\'%s\')" />
+            </p>
+            ',
+            $bsa_lang->line('submit_callbacks'),
+            $bsa_lang->line('reset_callbacks'),
+            $bsa_lang->line('callbacks_message')
+            );
+          }
+          ?>
+        </fieldset>
+      </form>
+    <?php } // END Callbacks ?>
+    </div><!-- buysellads -->
+  <?php
   }
   
 }
