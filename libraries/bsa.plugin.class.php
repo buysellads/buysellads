@@ -242,31 +242,33 @@ class BSA_Plugin
             $buysellads_callbacks = get_option( 'buysellads_callbacks' );
             $json_data = get_buysellads_json();
             foreach($json_data['zones'] as $zone) {
-              printf('
-                <tr valign="top">
-                  <td>'.$zone['id'].'</td>
-                  <td>
-                    '.$zone['width'].'x'.$zone['height'].'
-                    <input type="hidden" name="buysellads_callbacks['.$zone['id'].'][width]" value="'.$zone['width'].'" />
-                    <input type="hidden" name="buysellads_callbacks['.$zone['id'].'][height]" value="'.$zone['height'].'" />
-                  </td>
-                  <td>
-                    <select name="buysellads_callbacks['.$zone['id'].'][type]" class="widefat">
-                      <option value="iframe" %s>%s</option>
-                      <option value="html" %s>%s</option>
-                    </select>
-                  </td>
-                  <td>
-                    <textarea name="buysellads_callbacks['.$zone['id'].'][code]" rows="7" cols="60" class="textarea">%s</textarea>
-                  </td>
-                </tr>
-                ',
-                ('iframe' == $buysellads_callbacks[$zone['id']]['type']) ? 'selected': '',
-                'iFrame',
-                ('html' == $buysellads_callbacks[$zone['id']]['type']) ? 'selected': '',
-                'HTML',
-                $buysellads_callbacks[$zone['id']]['code']
-              );
+              if ($zone['model'] == 1) {
+                printf('
+                  <tr valign="top">
+                    <td>'.$zone['id'].'</td>
+                    <td>
+                      '.$zone['width'].'x'.$zone['height'].'
+                      <input type="hidden" name="buysellads_callbacks['.$zone['id'].'][width]" value="'.$zone['width'].'" />
+                      <input type="hidden" name="buysellads_callbacks['.$zone['id'].'][height]" value="'.$zone['height'].'" />
+                    </td>
+                    <td>
+                      <select name="buysellads_callbacks['.$zone['id'].'][type]" class="widefat">
+                        <option value="iframe" %s>%s</option>
+                        <option value="html" %s>%s</option>
+                      </select>
+                    </td>
+                    <td>
+                      <textarea name="buysellads_callbacks['.$zone['id'].'][code]" rows="7" cols="60" class="textarea">%s</textarea>
+                    </td>
+                  </tr>
+                  ',
+                  ('iframe' == $buysellads_callbacks[$zone['id']]['type']) ? 'selected': '',
+                  'iFrame',
+                  ('html' == $buysellads_callbacks[$zone['id']]['type']) ? 'selected': '',
+                  'HTML',
+                  $buysellads_callbacks[$zone['id']]['code']
+                );
+              }
             } 
             ?> 
             <tbody>
