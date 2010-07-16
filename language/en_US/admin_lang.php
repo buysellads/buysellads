@@ -25,8 +25,8 @@ $lang['bsa_body_open_desc'] = 'Directly after the opening <strong>&lt;body&gt;</
 
 $lang['submit_settings'] = 'Save Settings';
 
-$lang['callbacks_title'] = 'Ad Zone Callbacks';
-$lang['callbacks_desc'] = '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>';
+$lang['callbacks_title'] = 'Backfill for CPM based zones';
+$lang['callbacks_desc'] = '<p>When you do not have an ad sold through BSA for a given impression, we can serve up another ad or ad code of your choosing. Copy & paste your backfill ad code below:</p><p>When choosing between iFrame and HTML for your "Callback Type" only choose HTML if you are writing pure HTML in the "Code Block" space. In order to run a JavaScript file through a Javascript function we found that the iFrame was the only way that failed the least. So for any ad network code snippets you choose to use (AdSense etc.), it is safe to say that the iFrame is the best option.</p>';
 $lang['callbacks_id'] = 'Zone ID';
 $lang['callbacks_size'] = 'Ad Size';
 $lang['callbacks_type'] = 'Callback Type';
