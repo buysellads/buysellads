@@ -241,6 +241,7 @@ class BSA_Plugin
             <?php
             $buysellads_callbacks = get_option( 'buysellads_callbacks' );
             $json_data = get_buysellads_json();
+            $has_cpm = false;
             foreach($json_data['zones'] as $zone) {
               if ($zone['model'] == 1) {
                 printf('
@@ -268,22 +269,35 @@ class BSA_Plugin
                   'HTML',
                   $buysellads_callbacks[$zone['id']]['code']
                 );
+                $has_cpm = true;
               }
-            } 
+            }
+            if (!$has_cpm) 
+            {
+              printf('
+                <tr valign="top">
+                  <td colspan="4">Sorry, you have no CPM based zones available.</td>
+                </tr>
+                '
+              );
+            }
             ?> 
             <tbody>
           </table>
           <?php 
           if ( function_exists( 'wp_nonce_field' ) && wp_nonce_field( 'buysellads_callbacks' ) ) {
+            $deactivate = (!$has_cpm) ? 'disabled="disabled" ' : '';
             printf('
             <p class="submit">
-              <input type="submit" name="submit_callbacks" class="button-primary" value="%s" /> 
-              <input type="submit" name="reset_callbacks" value="%s" onclick="return confirm_reset(\'%s\')" />
+              <input type="submit" name="submit_callbacks" class="button-primary" value="%s" %s/> 
+              <input type="submit" name="reset_callbacks" value="%s" onclick="return confirm_reset(\'%s\')" %s/>
             </p>
             ',
             $bsa_lang->line('submit_callbacks'),
+            $deactivate,
             $bsa_lang->line('reset_callbacks'),
-            $bsa_lang->line('callbacks_message')
+            $bsa_lang->line('callbacks_message'),
+            $deactivate
             );
           }
           ?>

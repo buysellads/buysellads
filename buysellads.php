@@ -6,14 +6,14 @@ Description: Official BuySellAds.com WordPress plugin.
 Version: 1.0
 Author: Derek Herman
 Author URI: http://valendesigns.com/
-License: GPL2
+License: GPL3
 */
 
 /*
-  Copyright 2010  BuySellAds.com  (email : todd@buysellads.com)
+  Copyright 2010  BuySellAds.com  (email : derek@valendesigns.com)
 
   This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License, version 2, as 
+  it under the terms of the GNU General Public License, version 3, as 
   published by the Free Software Foundation.
   
   This program is distributed in the hope that it will be useful,
