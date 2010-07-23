@@ -13,8 +13,8 @@ jQuery(document).ready(function($)
 // Fade Out Message
 function fade_message() 
 {
-	jQuery('.fade').fadeOut(500);
-	clearTimeout(t);
+  jQuery('.fade').fadeOut(500);
+  clearTimeout(t);
 }
 
 // Confirm Delete

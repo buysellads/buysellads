@@ -27,17 +27,17 @@ class BSA_Language
   {
     // load $langfile array
     if (is_array($langfile))
-		{
-			foreach ($langfile as $class)
-			{
-				$this->_load_language($class, $idiom, $return);
-			}
-		}
-		// load one $langfile
-		else
-		{
-		  $this->_load_language($langfile, $idiom, $return);
-		}
+    {
+      foreach ($langfile as $class)
+      {
+      $this->_load_language($class, $idiom, $return);
+      }
+    }
+    // load one $langfile
+    else
+    {
+      $this->_load_language($langfile, $idiom, $return);
+    }
   }
   
   /**
