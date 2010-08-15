@@ -3,7 +3,7 @@
  * Functions
  *
  * @package WordPress
- * @subpackage Buy Sell Ads
+ * @subpackage BuySellAds
  * @since 1.0
  */
 
@@ -18,18 +18,10 @@ if (!function_exists('embed_bsa_async_js'))
 {
   function embed_bsa_async_js() 
   {
-    if (!is_admin()) {
-      $zones = get_backfill_zones();
-      if ($zones) {
-        $write_zones = "
-        var BSACallback = function(zoneid){
-          $zones
-        };";
-      }  
+    if (!is_admin()) { 
       printf("
         <!-- BuySellAds.com Ad Code -->
         <script type=\"text/javascript\">
-        $write_zones
         (function(){
           var bsa = document.createElement('script');
               bsa.type= 'text/javascript';
@@ -41,74 +33,6 @@ if (!function_exists('embed_bsa_async_js'))
         <!-- END BuySellAds.com Ad Code --> 
       ");
     }
-  }
-}
-
-/**
- * Get Backfill zones content
- *
- * @since 1.0
- * @uses BSA_PLUGIN_URL
- * @uses get_option()
- *
- * @return string
- */
-if (!function_exists('get_backfill_zones'))
-{
-  function get_backfill_zones()
-  {
-    $path = BSA_PLUGIN_URL;
-    $buysellads_callbacks = get_option( 'buysellads_callbacks' );
-    foreach($buysellads_callbacks as $id => $zone)
-    {
-      if ($zone['code'] && $zone['type']) {
-        switch ($zone['type']) {
-          case "html":
-            $zones .= "
-              if (zoneid == {$id})
-                var str = escape('{$zone['code']}');
-                return unescape(str);
-              ";
-            break;
-          default:
-            $zones .= "
-              if (zoneid == {$id})
-                var str = escape('<iframe src=\"{$path}/callback.php?callback=ads&id={$id}\" width=\"{$zone['width']}\" height=\"{$zone['height']}\" scrolling=\"no\" border=\"0\" style=\"border:none;overflow:hidden;\" class=\"backfill-{$id} bsa-iframe\"></iframe>');
-                return unescape(str);
-              ";
-            break;
-        }
-      }
-    }
-    return $zones;
-  }
-}
-
-/**
- * Backfill Callback
- *
- * @since 1.0
- * @uses get_option()
- *
- * @return string
- */
-if (!function_exists('backfill_callback'))
-{
-  function backfill_callback($id = 0)
-  {
-    $buysellads_callbacks = get_option( 'buysellads_callbacks' );
-    printf('
-    <html>
-      <head>
-        <style type="text/css">html,body,iframe{margin:0;padding:0;border:0;outline:0;}</style>
-      </head>
-      <body>
-        %s
-      </body>
-    </html>
-    ',
-    $buysellads_callbacks[$id]['code']
-    );
   }
 }
 

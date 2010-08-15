@@ -1,22 +1,21 @@
-=== Buy Sell Ads ===
+=== BuySellAds ===
 Contributors: valendesigns
-Donate link: http://bit.ly/c79XHw
-Tags: bsa, buy sell ads, ads, ad, ad management, widget, callback, backfill, adsense
+Tags: bsa, buy sell ads, ads, ad, ad management, widget
 Requires at least: 2.8
-Tested up to: 3.0
-Stable tag: 1.0
+Tested up to: 3.0.1
+Stable tag: 1.1
 
 Official BuySellAds.com WordPress plugin.
 
 == Description ==
 
-This official BuySellAds.com WordPress plugin gives you two extremely simple ways to insert your BSA code. You have the option to use Widgets or manually insert a single function that returns your desired Ad Zone. Also, you can now backfill your CPM based Ad Zones with other Ad Network code snippets or your own custom HTML.
+This official BuySellAds.com WordPress plugin gives you two extremely simple ways to insert your BSA code. You have the option to use Widgets or manually insert a single function that returns your desired Ad Zone.
 
 == Installation ==
 
 * Download and install the plugin in the `wp-content/plugins` directory.
 * Activate the plugin in WordPress. 
-* Go to `Buy Sell Ads->Settings` and insert your Site Key.
+* Go to `BuySellAds->Settings` and insert your Site Key.
 * Display your Ad Zones via the widgets menu found at `Appearance->Widgets`.
 * If you don't want to use Widgets, you can also add the following code to any one of your theme files with a .php extension:
   * `<?php if (function_exists('buysellads')) { buysellads($ad_zone); } ?>`
@@ -40,12 +39,16 @@ I will modify the translation once people have used the plugin. I want to make s
 
 == Changelog ==
 
+= 1.1 =
+* Removed Backfill
+
 = 1.0 =
 * First Release 7/19/2010
 
 == Upgrade Notice ==
 
-= None =
+= 1.1 =
+The backfill option has been removed. BuySellAds.com is implementing this feature server side and will no longer require a plugin.
 
 == Translations ==
 

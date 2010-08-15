@@ -3,7 +3,7 @@
  * Language Class
  *
  * @package WordPress
- * @subpackage Buy Sell Ads
+ * @subpackage BuySellAds
  * @since 1.0
  * @author Derek Herman
  */

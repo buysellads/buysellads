@@ -3,7 +3,7 @@
  * Plugin Class
  *
  * @package WordPress
- * @subpackage Buy Sell Ads
+ * @subpackage BuySellAds
  * @since 1.0
  */
 class BSA_Plugin 
@@ -146,32 +146,6 @@ class BSA_Plugin
         delete_option( 'bsa_site_key' );
       }
     }
-    
-    // Save Callbacks
-    if ( isset($_POST[ 'submit_callbacks' ]) ) 
-    {
-      // Check Referer
-      check_admin_referer( 'buysellads_callbacks' );
-      
-      // Update/Save Data
-      $this->bsa_update_callbacks();
-      
-      // Success Message
-      printf('<div class="updated fade"><p>%s</p></div>', $bsa_lang->line('callbacks_updated'));
-    }
-    
-    // Reset Callbacks
-    if ( isset($_POST[ 'reset_callbacks' ]) ) 
-    {
-      // Check Referer
-      check_admin_referer( 'buysellads_callbacks' );
-      
-      // Delete Saved Data
-      $this->bsa_delete_callbacks();
-      
-      // Success Message
-      printf('<div class="updated fade"><p>%s</p></div>', $bsa_lang->line('callbacks_error') );
-    }
     ?>
     <div class="wrap" id="buysellads">
       <h2><?php echo $bsa_lang->line('plugin_title'); ?></h2>
@@ -214,96 +188,6 @@ class BSA_Plugin
         ?>
         <input type="hidden" name="option_values" value="save" />
       </form>
-    <?php if ( get_option('bsa_site_key') != '' ) { // valid sitekey ?>    
-      <form method="post" action="">
-        <fieldset>
-          <h2><?php echo $bsa_lang->line('callbacks_title'); ?></h2>
-          <?php echo $bsa_lang->line('callbacks_desc'); ?>
-          <br />
-          <table class="widefat">
-            <thead>
-              <tr>
-                <th style="width:80px;"><?php echo $bsa_lang->line('callbacks_id'); ?></th>
-                <th style="width:100px;"><?php echo $bsa_lang->line('callbacks_size'); ?></th>
-                <th style="width:150px;"><?php echo $bsa_lang->line('callbacks_type'); ?></th>
-                <th><?php echo $bsa_lang->line('callbacks_code'); ?></th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th style="width:80px;"><?php echo $bsa_lang->line('callbacks_id'); ?></th>
-                <th style="width:100px;"><?php echo $bsa_lang->line('callbacks_size'); ?></th>
-                <th style="width:150px;"><?php echo $bsa_lang->line('callbacks_type'); ?></th>
-                <th><?php echo $bsa_lang->line('callbacks_code'); ?></th>
-              </tr>
-            <tfoot>
-            <tbody>
-            <?php
-            $buysellads_callbacks = get_option( 'buysellads_callbacks' );
-            $json_data = get_buysellads_json();
-            $has_cpm = false;
-            foreach($json_data['zones'] as $zone) {
-              if ($zone['model'] == 1) {
-                printf('
-                  <tr valign="top">
-                    <td>'.$zone['id'].'</td>
-                    <td>
-                      '.$zone['width'].'x'.$zone['height'].'
-                      <input type="hidden" name="buysellads_callbacks['.$zone['id'].'][width]" value="'.$zone['width'].'" />
-                      <input type="hidden" name="buysellads_callbacks['.$zone['id'].'][height]" value="'.$zone['height'].'" />
-                    </td>
-                    <td>
-                      <select name="buysellads_callbacks['.$zone['id'].'][type]" class="widefat">
-                        <option value="iframe" %s>%s</option>
-                        <option value="html" %s>%s</option>
-                      </select>
-                    </td>
-                    <td>
-                      <textarea name="buysellads_callbacks['.$zone['id'].'][code]" rows="7" cols="60" class="textarea">%s</textarea>
-                    </td>
-                  </tr>
-                  ',
-                  ('iframe' == $buysellads_callbacks[$zone['id']]['type']) ? 'selected': '',
-                  'iFrame',
-                  ('html' == $buysellads_callbacks[$zone['id']]['type']) ? 'selected': '',
-                  'HTML',
-                  $buysellads_callbacks[$zone['id']]['code']
-                );
-                $has_cpm = true;
-              }
-            }
-            if (!$has_cpm) 
-            {
-              printf('
-                <tr valign="top">
-                  <td colspan="4">Sorry, you have no CPM based zones available.</td>
-                </tr>
-                '
-              );
-            }
-            ?> 
-            <tbody>
-          </table>
-          <?php 
-          if ( function_exists( 'wp_nonce_field' ) && wp_nonce_field( 'buysellads_callbacks' ) ) {
-            $deactivate = (!$has_cpm) ? 'disabled="disabled" ' : '';
-            printf('
-            <p class="submit">
-              <input type="submit" name="submit_callbacks" class="button-primary" value="%s" %s/> 
-              <input type="submit" name="reset_callbacks" value="%s" onclick="return confirm_reset(\'%s\')" %s/>
-            </p>
-            ',
-            $bsa_lang->line('submit_callbacks'),
-            $deactivate,
-            $bsa_lang->line('reset_callbacks'),
-            $bsa_lang->line('callbacks_message'),
-            $deactivate
-            );
-          }
-          ?>
-        </fieldset>
-      </form>
-    <?php } // END Callbacks ?>
     </div><!-- buysellads -->
   <?php
   }

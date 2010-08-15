@@ -16,11 +16,3 @@ function fade_message()
   jQuery('.fade').fadeOut(500);
   clearTimeout(t);
 }
-
-// Confirm Delete
-function confirm_reset(string) 
-{
-  var answer = confirm(string);
-  if(!answer)
-    return false;
-}
