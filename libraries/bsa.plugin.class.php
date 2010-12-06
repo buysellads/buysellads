@@ -71,45 +71,6 @@ class BSA_Plugin
   }
   
   /**
-   * Update/Save Callback Data
-   *
-   * @since 1.0
-   * @uses stripslashes_deep()
-   * @uses get_option()
-   * @uses update_option()
-   *
-   * @return void
-   */
-  function bsa_update_callbacks()
-  {
-    // new options
-    $buysellads_callbacks_new = stripslashes_deep( $_POST['buysellads_callbacks'] );
-
-    // current options
-    $buysellads_callbacks_current = get_option( 'buysellads_callbacks' );
-    
-    // Update options
-    foreach($buysellads_callbacks_new as $key => $value) {
-      $buysellads_callbacks_current[$key] = $value;
-    }
-
-    update_option( 'buysellads_callbacks' , $buysellads_callbacks_current);
-  }
-  
-  /**
-   * Delete Callback Data
-   *
-   * @since 1.0
-   * @uses delete_option()
-   *
-   * @return void
-   */
-  function bsa_delete_callbacks()
-  {
-    delete_option( 'buysellads_callbacks' );
-  }
-  
-  /**
    * Load Scripts & Styles
    *
    * @since 1.0
