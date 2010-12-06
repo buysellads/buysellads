@@ -89,16 +89,16 @@ class BSA_Plugin
       // Read posted value
       $bsa_site_key = $_POST[ 'bsa_site_key' ];
       $bsa_body_open = $_POST[ 'bsa_body_open' ];
-
+      
       // Save posted values
       update_option( 'bsa_site_key', $bsa_site_key );
       update_option( 'bsa_body_open', $bsa_body_open );
-	  
-	  // new cdn
-	  $buysellads_cdn = $_POST['buysellads_cdn'];
-	  $cdns = buysellads_cdns();
-	
-	  // Make sure the CDN is valid before saving it.
+      
+      // new cdn
+      $buysellads_cdn = $_POST['buysellads_cdn'];
+      $cdns = buysellads_cdns();
+      
+      // Make sure the CDN is valid before saving it.
       update_option( 'buysellads_cdn' , (in_array($buysellads_cdn, $cdns) ? $buysellads_cdn : 's3.buysellads.com'));
       
       $json_data = get_buysellads_json();
@@ -129,20 +129,18 @@ class BSA_Plugin
                 <span class="description"><?php echo $bsa_lang->line('site_key_desc'); ?></span>
               </td>
             </tr>
-
             <tr valign="top">
               <th scope="row">
                 <label for="bsa_network"><?php echo $bsa_lang->line('network'); ?></label>
               </th>
               <td>
-				<select  id="bsa_network" name="buysellads_cdn">
-				<?php foreach(get_privatelabel_json() as $network): ?>
-					  <option <?php echo(stripos($network['cdn'], get_option('buysellads_cdn', 's3.buysellads.com')) === false ? '' : 'selected'); ?> value=<?php echo("\"{$network['cdn']}\""); ?> ><?php echo (htmlspecialchars($network['title'])); ?></option>
-				<?php endforeach; ?>
-				</select>
+                <select  id="bsa_network" name="buysellads_cdn">
+                <?php foreach(get_privatelabel_json() as $network): ?>
+                  <option <?php echo(stripos($network['cdn'], get_option('buysellads_cdn', 's3.buysellads.com')) === false ? '' : 'selected'); ?> value=<?php echo("\"{$network['cdn']}\""); ?> ><?php echo (htmlspecialchars($network['title'])); ?></option>
+                <?php endforeach; ?>
+                </select>
               </td>
             </tr>
-
             <tr valign="top">
               <th scope="row"><?php echo $bsa_lang->line('bsa_body_open'); ?></th>
               <td> 

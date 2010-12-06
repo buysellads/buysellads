@@ -72,6 +72,8 @@ class BSA_Widget extends WP_Widget
    * The newly calculated value of $instance should be returned.
    * If "false" is returned, the instance won't be saved/updated.
    *
+   * @since 1.0
+   *
    * @param array $new_instance New settings for this instance as input by the user via form()
    * @param array $old_instance Old settings for this instance
    * @return array Settings to save or bool false to cancel saving
@@ -100,7 +102,7 @@ class BSA_Widget extends WP_Widget
     if (!$site_key = get_option('bsa_site_key')) 
     {
       echo '<p>'. sprintf( $bsa_lang->line('empty_site_key'), admin_url('admin.php?page=bsa_settings') ) .'</p>';
-			return;
+      return;
     } 
     else 
     {
@@ -116,15 +118,15 @@ class BSA_Widget extends WP_Widget
       <p>
         <label for="<?php echo $this->get_field_id('ad_zone'); ?>"><?php echo $bsa_lang->line('widget_ad_zone'); ?>: 
           <select class="widefat" name="<?php echo $this->get_field_name('ad_zone'); ?>" id="<?php echo $this->get_field_id('ad_zone'); ?>" value="<?php echo attribute_escape($ad_zone); ?>">
-          <?php
-          $json_data = get_buysellads_json();
-          foreach($json_data['zones'] as $zone) 
-          {
-            $ad_type = ($zone['type'] == '1') ? ' Text Ad': ' Image Ad';
-            $selected = ($zone['id'] == attribute_escape($ad_zone)) ? ' selected="selected"': '';
-            echo '<option name="'.$zone['id'].'" value="'.$zone['id'].'"'.$selected.'>'.$zone['id'].' ('.(($zone['nads'] == 1) ? $zone['nads'].$ad_type: $zone['nads'].$ad_type.'s').' | '.$zone['width'].'x'.$zone['height'].')</option>';
-          }
-          ?>
+            <?php
+            $json_data = get_buysellads_json();
+            foreach($json_data['zones'] as $zone) 
+            {
+              $ad_type = ($zone['type'] == '1') ? ' Text Ad': ' Image Ad';
+              $selected = ($zone['id'] == attribute_escape($ad_zone)) ? ' selected="selected"': '';
+              echo '<option name="'.$zone['id'].'" value="'.$zone['id'].'"'.$selected.'>'.$zone['id'].' ('.(($zone['nads'] == 1) ? $zone['nads'].$ad_type: $zone['nads'].$ad_type.'s').' | '.$zone['width'].'x'.$zone['height'].')</option>';
+            }
+            ?>
           </select>
         </label>
       </p>

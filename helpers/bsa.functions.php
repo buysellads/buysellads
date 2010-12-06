@@ -111,8 +111,8 @@ if (!function_exists('get_buysellads_json'))
   {
     if ($bsa_site_key = get_option('bsa_site_key'))
     {
-	  $cdn = get_option( 'buysellads_cdn', 's3.buysellads.com');
-	  $json_url = "http://{$cdn}/r/s_".$bsa_site_key.".js";
+      $cdn = get_option( 'buysellads_cdn', 's3.buysellads.com');
+      $json_url = "http://{$cdn}/r/s_".$bsa_site_key.".js";
       $json_contents = @file_get_contents($json_url);
       
       // If @file_get_contents($json_url) returns true
@@ -128,46 +128,53 @@ if (!function_exists('get_buysellads_json'))
 /**
  * Function to grab the configuration information for private labels
  *
+ * @since 2.0
  * @uses file_get_contents()
  * @uses json_decode()
+ *
  * @return JSON array
  */
 if (!function_exists('get_privatelabel_json'))
 {
-	function get_privatelabel_json()
-	{
-      	$json_url = "http://s3.buysellads.com/config/wordpress.js";
-      	$json_contents = @file_get_contents($json_url);
-		$json = json_decode($json_contents, true);
+  function get_privatelabel_json()
+  {
+    $json_url = "http://s3.buysellads.com/config/wordpress.js";
+    $json_contents = @file_get_contents($json_url);
+    $json = json_decode($json_contents, true);
 		
-		// If @file_get_contents($json_url) returns true
-		return $json_contents  && isset($json['networks']) ? $json['networks'] : array("title"=>"BuySellAds.com","cdn"=>"s3.buysellads.com");
-    }
+    // If @file_get_contents($json_url) returns true
+    return $json_contents  && isset($json['networks']) ? $json['networks'] : array("title"=>"BuySellAds.com","cdn"=>"s3.buysellads.com");
+  }
 }
 
 /**
  * Returns an array of CDNs for the private labels
  *
+ * @since 2.0
  * @uses get_privatelabel_json()
+ *
  * @return Array
  */
 if (!function_exists('buysellads_cdns'))
 {
-	function buysellads_cdns()
-	{
-		$json = get_privatelabel_json();
-		return array_map('buysellads_cdns_helper', $json);
-    }
+  function buysellads_cdns()
+  {
+    $json = get_privatelabel_json();
+    return array_map('buysellads_cdns_helper', $json);
+  }
 }
 
 /**
  * Helper function to filter the CDNs
+ *
+ * @since 2.0
+ *
  * @return String
  */
 if (!function_exists('buysellads_cdns_helper'))
 {
-	function buysellads_cdns_helper($network)
-	{
-		return $network['cdn'];
-    }
+  function buysellads_cdns_helper($network)
+  {
+    return $network['cdn'];
+  }
 }
