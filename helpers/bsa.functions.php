@@ -141,10 +141,7 @@ if (!function_exists('get_privatelabel_json'))
 		$json = json_decode($json_contents, true);
 		
 		// If @file_get_contents($json_url) returns true
-		$r = $json_contents  && isset($json['networks']) ? $json['networks'] : array();
-		update_option('buysellads_network', $r);
-
-		return $r;
+		return $json_contents  && isset($json['networks']) ? $json['networks'] : array();
     }
 }
 
@@ -158,7 +155,7 @@ if (!function_exists('buysellads_cdns'))
 {
 	function buysellads_cdns()
 	{
-		$json = get_option('buysellads_network', get_privatelabel_json());
+		$json = get_privatelabel_json();
 		return array_map('buysellads_cdns_helper', $json);
     }
 }
