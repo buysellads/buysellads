@@ -112,18 +112,18 @@ class BSA_Widget extends WP_Widget
       ?>	
       <p>
         <label for="<?php echo $this->get_field_id('title'); ?>"><?php echo $bsa_lang->line('widget_title'); ?>: 
-          <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" />
+          <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
         </label>
       </p>
       <p>
         <label for="<?php echo $this->get_field_id('ad_zone'); ?>"><?php echo $bsa_lang->line('widget_ad_zone'); ?>: 
-          <select class="widefat" name="<?php echo $this->get_field_name('ad_zone'); ?>" id="<?php echo $this->get_field_id('ad_zone'); ?>" value="<?php echo attribute_escape($ad_zone); ?>">
+          <select class="widefat" name="<?php echo $this->get_field_name('ad_zone'); ?>" id="<?php echo $this->get_field_id('ad_zone'); ?>" value="<?php echo esc_attr($ad_zone); ?>">
             <?php
             $json_data = get_buysellads_json();
             foreach($json_data['zones'] as $zone) 
             {
               $ad_type = ($zone['type'] == '1') ? ' Text Ad': ' Image Ad';
-              $selected = ($zone['id'] == attribute_escape($ad_zone)) ? ' selected="selected"': '';
+              $selected = ($zone['id'] == esc_attr($ad_zone)) ? ' selected="selected"': '';
               echo '<option name="'.$zone['id'].'" value="'.$zone['id'].'"'.$selected.'>'.$zone['id'].' ('.(($zone['nads'] == 1) ? $zone['nads'].$ad_type: $zone['nads'].$ad_type.'s').' | '.$zone['width'].'x'.$zone['height'].')</option>';
             }
             ?>
