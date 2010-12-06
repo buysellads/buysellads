@@ -19,6 +19,7 @@ if (!function_exists('embed_bsa_async_js'))
   function embed_bsa_async_js() 
   {
     if (!is_admin()) { 
+	  $cdn = get_option( 'buysellads_cdn', 's3.buysellads.com');
       printf("
         <!-- BuySellAds.com Ad Code -->
         <script type=\"text/javascript\">
@@ -26,7 +27,7 @@ if (!function_exists('embed_bsa_async_js'))
           var bsa = document.createElement('script');
               bsa.type= 'text/javascript';
               bsa.async = true;
-              bsa.src='//s3.buysellads.com/ac/bsa.js';
+              bsa.src='//{$cdn}/ac/bsa.js';
           (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
         })();
         </script>
@@ -110,7 +111,8 @@ if (!function_exists('get_buysellads_json'))
   {
     if ($bsa_site_key = get_option('bsa_site_key'))
     {
-      $json_url = "http://s3.buysellads.com/r/s_".$bsa_site_key.".js";
+	  $cdn = get_option( 'buysellads_cdn', 's3.buysellads.com');
+	  $json_url = "http://{$cdn}/r/s_".$bsa_site_key.".js";
       $json_contents = @file_get_contents($json_url);
       
       // If @file_get_contents($json_url) returns true
@@ -121,4 +123,54 @@ if (!function_exists('get_buysellads_json'))
       }
     }
   }
+}
+
+/**
+ * Function to grab the configuration information for private labels
+ *
+ * @uses file_get_contents()
+ * @uses json_decode()
+ * @return JSON array
+ */
+if (!function_exists('get_privatelabel_json'))
+{
+	function get_privatelabel_json()
+	{
+      	$json_url = "http://s3.buysellads.com/config/wordpress.js";
+      	$json_contents = @file_get_contents($json_url);
+		$json = json_decode($json_contents, true);
+		
+		// If @file_get_contents($json_url) returns true
+		$r = $json_contents  && isset($json['networks']) ? $json['networks'] : array();
+		update_option('buysellads_network', $r);
+
+		return $r;
+    }
+}
+
+/**
+ * Returns an array of CDNs for the private labels
+ *
+ * @uses get_privatelabel_json()
+ * @return Array
+ */
+if (!function_exists('buysellads_cdns'))
+{
+	function buysellads_cdns()
+	{
+		$json = get_option('buysellads_network', get_privatelabel_json());
+		return array_map('buysellads_cdns_helper', $json);
+    }
+}
+
+/**
+ * Helper function to filter the CDNs
+ * @return String
+ */
+if (!function_exists('buysellads_cdns_helper'))
+{
+	function buysellads_cdns_helper($network)
+	{
+		return $network['cdn'];
+    }
 }

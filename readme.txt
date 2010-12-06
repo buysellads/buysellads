@@ -2,8 +2,8 @@
 Contributors: valendesigns
 Tags: bsa, buy sell ads, ads, ad, ad management, widget
 Requires at least: 2.8
-Tested up to: 3.0.1
-Stable tag: 1.1
+Tested up to: 3.0.2
+Stable tag: 2.0
 
 Official BuySellAds.com WordPress plugin.
 
@@ -39,6 +39,9 @@ I will modify the translation once people have used the plugin. I want to make s
 
 == Changelog ==
 
+= 2.0 =
+* Added support for private labels
+
 = 1.1 =
 * Removed Backfill
 
@@ -46,6 +49,9 @@ I will modify the translation once people have used the plugin. I want to make s
 * First Release 7/19/2010
 
 == Upgrade Notice ==
+
+= 2.0 =
+Cleaned up the repo UPGRADE if you downloaded any previous version
 
 = 1.1 =
 The backfill option has been removed. BuySellAds.com is implementing this feature server side and will no longer require a plugin.
