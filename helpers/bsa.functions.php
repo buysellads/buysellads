@@ -141,7 +141,7 @@ if (!function_exists('get_privatelabel_json'))
 		$json = json_decode($json_contents, true);
 		
 		// If @file_get_contents($json_url) returns true
-		return $json_contents  && isset($json['networks']) ? $json['networks'] : array();
+		return $json_contents  && isset($json['networks']) ? $json['networks'] : array("title"=>"BuySellAds.com","cdn"=>"s3.buysellads.com");
     }
 }
 
