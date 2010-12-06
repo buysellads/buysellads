@@ -39,6 +39,12 @@ I will modify the translation once people have used the plugin. I want to make s
 
 == Changelog ==
 
+= 2.1 =
+* Fixed an empty array
+* Fixed caching issue for json configuration
+* Removed a deprecated PHP function call
+* Dead code removal
+
 = 2.0 =
 * Added support for private labels
 
