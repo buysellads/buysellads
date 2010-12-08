@@ -8,6 +8,46 @@
  */
 
 /**
+ * Gets a remote url via curl
+ * @param $address The remote address to retrieve
+ * @return Returns the content of the url (string)
+ */
+if (!function_exists('curl_get_contents'))
+{
+	function curl_get_contents($address)
+	{
+		$ch = curl_init();
+		$timeout = 5;
+		curl_setopt($ch, CURLOPT_URL, $address);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		$data = curl_exec($ch);
+		curl_close($ch);
+		return $data;
+	}
+}
+
+/**
+ * Get the contents of a remote url
+ * @uses file_get_contents()
+ * @param $address The remote address to retrieve
+ * @return Returns the content of the url (string)
+ */
+if (!function_exists('get_contents'))
+{
+	function get_contents($address)
+	{
+		// Try file_get_contents
+		$data = @file_get_contents($address);
+		
+		// If file_get_contents fails
+		// This can happen if allow_url_fopen is disabled
+		$data = ($data !== false ? $data : curl_get_contents($address));
+		return $data;
+	}
+}
+
+/**
  * Embeds BSA Asynchronous JavaScript
  *
  * @since 1.0
@@ -100,7 +140,6 @@ if (!function_exists('buysellads'))
  * Function to grab BSA zones
  *
  * @since 1.0
- * @uses file_get_contents()
  * @uses json_decode()
  *
  * @return JSON array
@@ -113,7 +152,7 @@ if (!function_exists('get_buysellads_json'))
     {
       $cdn = get_option( 'buysellads_cdn', 's3.buysellads.com');
       $json_url = "http://{$cdn}/r/s_".$bsa_site_key.".js";
-      $json_contents = @file_get_contents($json_url);
+      $json_contents = get_contents($json_url);
       
       // If @file_get_contents($json_url) returns true
       if ($json_contents) 
@@ -129,7 +168,6 @@ if (!function_exists('get_buysellads_json'))
  * Function to grab the configuration information for private labels
  *
  * @since 2.0
- * @uses file_get_contents()
  * @uses json_decode()
  *
  * @return JSON array
@@ -139,7 +177,7 @@ if (!function_exists('get_privatelabel_json'))
   function get_privatelabel_json()
   {
     $json_url = "http://s3.buysellads.com/config/wordpress.js";
-    $json_contents = @file_get_contents($json_url);
+    $json_contents = get_contents($json_url);
     $json = json_decode($json_contents, true);
 		
     // If @file_get_contents($json_url) returns true
