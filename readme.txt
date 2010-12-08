@@ -3,7 +3,7 @@ Contributors: valendesigns
 Tags: bsa, buy sell ads, ads, ad, ad management, widget
 Requires at least: 2.8
 Tested up to: 3.0.2
-Stable tag: 2.1
+Stable tag: 2.1.1
 
 Official BuySellAds.com WordPress plugin.
 
@@ -38,6 +38,9 @@ I will modify the translation once people have used the plugin. I want to make s
 2. Widgets Menu
 
 == Changelog ==
+
+= 2.1.1 =
+* If file_get_contents fails, we now fall back to curl to try to get the javascript ad code.
 
 = 2.1 =
 * Fixed an empty array
